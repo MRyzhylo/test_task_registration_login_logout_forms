@@ -11,7 +11,9 @@
   "author": "MRyzhylo",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "concurrently": "^6.0.2",

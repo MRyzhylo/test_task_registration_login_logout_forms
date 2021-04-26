@@ -1,0 +1,7 @@
+{
+    "port": 5000,
+    "host": "localhost",
+    "user": "root",
+    "pass": "root",
+    "db_name": "userdata_reg"
+}
