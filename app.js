@@ -1,25 +1,14 @@
 const express = require('express');
 const config = require('config');
-const mysql = require('mysql');
+const mySqlDbConnection = require('./connection/dbConnection');
 
 const app = express()
 
+app.use(express.json({ extended: true}))
+
 app.use('/api/auth', require('./routes/auth.routes'))
 
-const db = mysql.createConnection({
-    host: config.get('host'),
-    user: config.get('user'),
-    password: config.get('pass'),
-    database: config.get('db_name')
-});
-
-db.connect( (err)=> {
-    if (err) {
-        console.log(err)
-    } else {
-        console.log('Database conected...')
-    }
-});
+ mySqlDbConnection()
 
 const PORT = config.get('port')
 

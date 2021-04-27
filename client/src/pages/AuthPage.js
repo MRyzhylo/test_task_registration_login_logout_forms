@@ -1,14 +1,22 @@
 import { useState } from "react";
+import { useHttp } from "../hooks/http.hook";
 
 function AuthPage () {
+    const {loading, request} =useHttp()
     const [form, setForm] = useState({
-        email: '', login: '', realName: '', password: '', birthDate: '', country: '', agrees:''
+        email: '', login: '', realName: '', password: '', birthDate: '', country: '', agreement:''
     });
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value})
     }
 
+    const registrationHandler = async () => {
+        try {
+            const data = await request('/api/auth/registration', 'POST', {...form})
+            console.log('data:', data)
+        } catch (e) {}
+    }
 
     return (
         <div className="RegForm">
@@ -30,9 +38,11 @@ function AuthPage () {
 
                 </select>
                 I agree with terms and conditions
-                <input type="checkbox" name="agrees" onChange={changeHandler}/>
+                <input type="checkbox" name="agreement" onChange={changeHandler}/>
             </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" 
+                 onClick={registrationHandler} 
+                 disabled={loading} />
                 
         </form>
     </div>
