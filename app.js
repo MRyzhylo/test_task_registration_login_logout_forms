@@ -4,6 +4,8 @@ const mysql = require('mysql');
 
 const app = express()
 
+app.use('/api/auth', require('./routes/auth.routes'))
+
 const db = mysql.createConnection({
     host: config.get('host'),
     user: config.get('user'),
