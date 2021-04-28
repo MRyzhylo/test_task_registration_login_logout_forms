@@ -1,5 +1,4 @@
-import {Switch, Route, Redirect} from 'react-router-dom';
-import MainPage from './pages/MainPage';
+import {Switch, Route} from 'react-router-dom';
 import UserPage from './pages/UserPage';
 import AuthPage from './pages/AuthPage';
 import LoginPage from './pages/LoginPage';
@@ -11,12 +10,6 @@ function useRoutes (isAutenticated) {
                 <Route path="/user" exact>
                     <UserPage />
                 </Route>
-                <Route path="/main" exact>
-                    <MainPage />
-                </Route>
-                <Redirect to="/main">
-                    <MainPage />
-                </Redirect> 
             </Switch>
         )
     }

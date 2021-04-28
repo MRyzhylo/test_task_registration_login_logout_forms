@@ -11,7 +11,12 @@ const db = mySqlDbConnection()
 router.post('/registration', 
 [
     body('email', 'Incorrect email').isEmail(),
+    body('login', 'Please enter your login').not().isEmpty().trim(),
+    body('real_name', 'Please enter your name').not().isEmpty().trim(),
     body('password', 'Minimal password length is 8 symbols').isLength({min: 8}),
+    body('birth_date', 'plese enter your date of birth').not().isEmpty(),
+    body('country', 'Select your country').not().isEmpty(),
+    body('agreement', 'Please agree with term').not().isEmpty()
 ],
 async (req, res)=> {
     
