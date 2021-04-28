@@ -2,6 +2,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/UserPage';
 import AuthPage from './pages/AuthPage';
+import LoginPage from './pages/LoginPage';
 
 function useRoutes (isAutenticated) {
     if(isAutenticated) {
@@ -23,6 +24,9 @@ function useRoutes (isAutenticated) {
         <Switch>
             <Route path="/" exact>
                 <AuthPage />
+            </Route>
+            <Route path="/login" exact>
+                <LoginPage />
             </Route>
         </Switch>
     )
