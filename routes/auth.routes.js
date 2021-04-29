@@ -96,9 +96,9 @@ async (req, res)=> {
     
     db.query( 'SELECT * FROM userreg_data WHERE email = ? OR login = ?', [username, username], async (error, results) => {
 
-        let comparedPassword = await bcrypt.compare(password, results[0].password)
+        let IsCompared = await bcrypt.compare(password, results[0].password)
        
-        if ( !results || !comparedPassword) {
+        if ( !results || !IsCompared) {
             res.status(401).json({
                 message: 'Incorrect username or password'
             })
@@ -106,21 +106,17 @@ async (req, res)=> {
             const id = results[0].id;
             const secretPhrase = config.get('jwt_secret');
 
-            const token = jwt.sign({ id: id }, secretPhrase, {
-                expiresIn: '1h'
-            }); 
-            console.log('token is:', token)
+            const token = jwt.sign(
+                { Userid: id }, 
+                secretPhrase, 
+                { expiresIn: '1h' }
+            ); 
 
-            const cookieOptions = {
-                expires: new Date(
-                    Date.now() + config.get('cookie_expires') * 24 * 60 * 60 * 1000
-                ),
-                httpOnly: true
+            res.json({ 
+                token, 
+                userId: id, 
+                message: "User signed in"})
             }
-
-            res.cookie('jwt', token, cookieOptions);
-            res.status(200).redirect("/user");
-        }
     })
 
 

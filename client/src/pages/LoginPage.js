@@ -1,8 +1,10 @@
-import {useState, useEffect} from 'react'
-import {useHttp} from '../hooks/http.hook';
+import { useState, useEffect, useContext } from 'react';
+import { useHttp } from '../hooks/http.hook';
+import { AuthContext } from '../context/AuthContext';
 
 
 function LoginForm() {
+    const auth = useContext(AuthContext);
     const [form, setForm] = useState({
         username: '', password: '', 
     });
@@ -19,7 +21,7 @@ function LoginForm() {
     const signinHandler = async () => {
         try {
             const data = await request('http://localhost:5000/api/auth/login', 'POST', {...form})
-            console.log( data.message )
+            auth.logIn(data.token, data.userId)
         } catch (e) {}
     }
     
