@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useHttp } from "../hooks/http.hook";
 
 function AuthPage () {
-    const {loading, request, error,clearError} =useHttp()
+    const {loading, request, error, clearError} =useHttp()
     const [form, setForm] = useState({
         email: '', login: '', real_name: '', password: '', birth_date: '', country: '', agreement:''
     });
 
     useEffect( ()=> {
-        
+        clearError()
     }, [error, clearError])
 
     const changeHandler = event => {

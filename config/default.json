@@ -3,5 +3,7 @@
     "host": "localhost",
     "user": "root",
     "pass": "root",
-    "db_name": "userdata_reg"
+    "db_name": "userdata_reg",
+    "jwt_secret": "supersecretpassword",
+    "cookie_expires": 10
 }

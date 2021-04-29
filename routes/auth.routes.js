@@ -1,6 +1,8 @@
 const {Router} = require('express');
 const {body, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const mySqlDbConnection = require('../connection/dbConnection');
 
 const router = Router();
@@ -11,7 +13,7 @@ const db = mySqlDbConnection()
 router.post('/registration', 
 [
     body('email', 'Incorrect email').isEmail(),
-    body('login', 'Please enter your login').not().isEmpty().trim(),
+    body('login', 'Please enter your login (Login must be unique and must not be an email)').not().isEmail().not().isEmpty().trim(),
     body('real_name', 'Please enter your name').not().isEmpty().trim(),
     body('password', 'Minimal password length is 8 symbols').isLength({min: 8}),
     body('birth_date', 'plese enter your date of birth').not().isEmpty(),
@@ -80,22 +82,51 @@ async (req, res)=> {
 
 // /api/auth/login
 router.post('/login', 
-[
-    body('email', 'Enter correct email').normalizeEmail().isEmail() ||
-    body('login', 'Enter login').exists(),
-    body('password', 'Minimal password length is 8 symbols').exists()
-],
-(req, res)=> {
-    const errors = validationResult(req);
+async (req, res)=> {
+    try {
 
-    if (!errors.isEmpty()){
+    const { username, password} = req.body
+
+    if (!username || !password) {
         return res.status(400).json({
-            errors: errors.array(),
-            message: "Incorect login data"
+            message: 'Please provide an email or login and password'
         })
     }
 
-    const { email, login, password} = req.body
+    
+    db.query( 'SELECT * FROM userreg_data WHERE email = ? OR login = ?', [username, username], async (error, results) => {
+
+        let comparedPassword = await bcrypt.compare(password, results[0].password)
+       
+        if ( !results || !comparedPassword) {
+            res.status(401).json({
+                message: 'Incorrect username or password'
+            })
+        } else {
+            const id = results[0].id;
+            const secretPhrase = config.get('jwt_secret');
+
+            const token = jwt.sign({ id: id }, secretPhrase, {
+                expiresIn: '1h'
+            }); 
+            console.log('token is:', token)
+
+            const cookieOptions = {
+                expires: new Date(
+                    Date.now() + config.get('cookie_expires') * 24 * 60 * 60 * 1000
+                ),
+                httpOnly: true
+            }
+
+            res.cookie('jwt', token, cookieOptions);
+            res.status(200).redirect("/user");
+        }
+    })
+
+
+    } catch (e) {
+        console.log(e)
+    }
 });
 
 module.exports = router
