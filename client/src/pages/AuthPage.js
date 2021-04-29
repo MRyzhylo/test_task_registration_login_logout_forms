@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
+import { useErrMessage } from "../hooks/errorMessage.hook";
 import { useHttp } from "../hooks/http.hook";
 
 function AuthPage () {
+    const message = useErrMessage()
     const {loading, request, error, clearError} =useHttp()
     const [form, setForm] = useState({
         email: '', login: '', real_name: '', password: '', birth_date: '', country: '', agreement:''
     });
 
     useEffect( ()=> {
+        message(error)
         clearError()
-    }, [error, clearError])
+    }, [error, message, clearError])
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value})
@@ -39,7 +42,7 @@ function AuthPage () {
                 <input type="date" name="birth_date" onChange={changeHandler}/>
                 Country:
                 <select id="countrySelect" name="country" onChange={changeHandler}>
-                    <option>Ukraine</option>
+                    <option value=''>Please choose your country</option>
                     <option>Poland</option>
                 </select>
                 I agree with terms and conditions
@@ -50,7 +53,7 @@ function AuthPage () {
                  disabled={loading} />
                 
         </form>
-        
+        <h1 id="error"> </h1>
     </div>
     )
 }

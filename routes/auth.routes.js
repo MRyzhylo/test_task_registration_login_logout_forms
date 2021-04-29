@@ -103,19 +103,20 @@ async (req, res)=> {
                 message: 'Incorrect username or password'
             })
         } else {
-            const id = results[0].id;
             const secretPhrase = config.get('jwt_secret');
 
             const token = jwt.sign(
-                { Userid: id }, 
+                { Userid: results[0].id }, 
                 secretPhrase, 
                 { expiresIn: '1h' }
             ); 
 
             res.json({ 
                 token, 
-                userId: id, 
-                message: "User signed in"})
+                userId: results[0].id,
+                userEmail: results[0].email,  
+                userName: results[0].real_name,
+                })
             }
     })
 
