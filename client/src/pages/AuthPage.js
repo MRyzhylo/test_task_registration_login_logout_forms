@@ -45,29 +45,54 @@ function AuthPage () {
             <h1> Registration </h1>
             <label>
                 Email:
-                <input type="email" name="email" onChange={changeHandler}/>
+                    <input 
+                        placeholder="Email:" 
+                        type="email" 
+                        name="email" 
+                        onChange={changeHandler}/>
                 Login:
-                <input type="text"  name="login" onChange={changeHandler}/>
+                    <input 
+                        placeholder="Login:" 
+                        type="text"  
+                        name="login" 
+                        onChange={changeHandler}/>
                 Real name:
-                <input type="text" name="real_name" onChange={changeHandler}/>
+                    <input 
+                        placeholder="Real name:" 
+                        type="text" 
+                        name="real_name" 
+                        onChange={changeHandler}/>
                 Password:
-                <input type="password" name="password" onChange={changeHandler}/>
+                    <input 
+                        placeholder="Password:" 
+                        type="password" 
+                        name="password" 
+                        onChange={changeHandler}/>
                 Birth date:
-                <input type="date" name="birth_date" onChange={changeHandler}/>
+                    <input 
+                        type="date" 
+                        name="birth_date" 
+                        onChange={changeHandler}/>
                 Country:
-                <select id="country_select" name="country" onChange={changeHandler} >
-                    <option value=''>Please choose your country</option>
-                    
-                </select>
+                    <select 
+                        id="country_select" 
+                        name="country" 
+                        onChange={changeHandler} >
+                            <option value=''>Please choose your country</option>
+                            
+                    </select>
                 I agree with terms and conditions
-                <input type="checkbox" name="agreement" onChange={changeHandler}/>
+                    <input 
+                        type="checkbox" 
+                        name="agreement" 
+                        onChange={changeHandler}/>
             </label>
-                <input type="submit" value="Submit" 
+                <input id="reg_button" type="submit" value="Submit" 
                  onClick={registrationHandler} 
                  disabled={loading} />
                 
         </form>
-        <h1 id="error"> </h1>
+        <h4 id="error"> </h4>
     </div>
     )
 }

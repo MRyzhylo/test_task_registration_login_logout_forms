@@ -36,16 +36,24 @@ function LoginForm() {
               <h1> Sign in </h1>
               <label>
                   Email or login:
-                  <input type="text" name="username" onChange={changeHandler}/>
+                    <input 
+                        placeholder="Email or login:"
+                        type="text" 
+                        name="username" 
+                        onChange={changeHandler}/>
                   Password:
-                  <input type="password" name="password" onChange={changeHandler}/>
+                    <input 
+                        placeholder="Password:"
+                        type="password" 
+                        name="password" 
+                        onChange={changeHandler}/>
               </label>
-                  <input type="submit" value="Sign in" 
+                  <input id="sign_button" type="submit" value="Sign in" 
                   onClick={signinHandler}
                   disabled={loading}
                   />
           </form>
-          <h1 id="error"> </h1>
+          <h4 id="error"> </h4>
       </div> 
     )
   }

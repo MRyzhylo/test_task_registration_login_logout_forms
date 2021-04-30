@@ -2,30 +2,50 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  display: block;
+  margin: 5px auto;
+  color: rgb(59, 59, 216);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+label {
+  font-size: 14px;
+  color: blueviolet;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+input, select {
+  margin: 0px auto 5px;
+  padding: 1px;
 }
 
-.App-link {
-  color: #61dafb;
+#error {
+  display: block;
+  background: rgb(245, 70, 70);
+  margin: 10px auto;
+}
+
+.header {
+  display:  flex;
+  background: rgb(189, 240, 114);
+}
+
+.header ul {
+  display: block;
+  margin: 5px auto;
+  padding: 0;
+}
+
+.header ul li {
+  display: block;
+  list-style: none;
+}
+
+.header ul li a {
+  display: block;
+  text-decoration: none;
+  padding: 5px 10px;
+  margin: 5px auto;
+  border: 1px solid darkgreen;
 }
 
 .auth_form form label {
@@ -35,7 +55,15 @@
 
 .auth_form form label input {
   display: block;
-  padding-bottom: 10px;
+}
+
+#reg_button, #sign_button {
+  display: block;
+  padding: 5px 25px;
+  margin: 5px auto;
+  background: rgb(141, 238, 44);
+  border: 1px solid darkgreen;
+  border-radius: 10%;
 }
 
 .login_form form label {
@@ -45,14 +73,20 @@
 
 .login_form form label input {
   display: block;
-  padding-bottom: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.user_page p {
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+}
+
+#logout_button {
+  display: block;
+  padding: 5px 25px;
+  margin: 5px auto;
+  background: rgb(245, 102, 35);
+  border: 1px solid rgb(255, 54, 4);
+  border-radius: 10%;
 }

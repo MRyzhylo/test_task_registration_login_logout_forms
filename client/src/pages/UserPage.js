@@ -15,7 +15,11 @@ function UserPage () {
             <h1>User Page</h1>
             <p>Hi : {auth.userName} </p>
             <p>Your email: {auth.userEmail} </p>
-            <input type="button" value="Log out" onClick={logOutHandler} />
+                <input 
+                    id="logout_button" 
+                    type="button" 
+                    value="Log out" 
+                    onClick={logOutHandler} />
         </div>
     )
 }
