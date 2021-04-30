@@ -23,7 +23,7 @@ function LoginForm() {
     
     const signinHandler = async () => {
         try {
-            const data = await request('http://localhost:5000/api/auth/login', 'POST', {...form})
+            const data = await request('/api/auth/login', 'POST', {...form})
             auth.logIn(data.token, data.userId, data.userName, data.userEmail, data.Message)
             
         } catch (e) {}

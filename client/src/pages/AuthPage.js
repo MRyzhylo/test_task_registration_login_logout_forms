@@ -15,7 +15,7 @@ function AuthPage () {
 
     const countryListHandler = async () => {
         try {
-            const countries = await request('http://localhost:5000/api/auth/country_list', 'GET')
+            const countries = await request('/api/auth/country_list', 'GET')
             await list(countries)
         } catch (e) {}
     }
@@ -33,7 +33,7 @@ function AuthPage () {
 
     const registrationHandler = async () => {
         try {
-            const data = await request('http://localhost:5000/api/auth/registration', 'POST', {...form})
+            const data = await request('/api/auth/registration', 'POST', {...form})
             auth.logIn(data.token, data.userId, data.userName, data.userEmail, data.Message)
             console.log(data.message)
         } catch (e) {}
