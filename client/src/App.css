@@ -28,22 +28,22 @@
   color: #61dafb;
 }
 
-.RegForm form label {
+.auth_form form label {
   display: flex;
   flex-direction: column;
 }
 
-.RegForm form label input {
+.auth_form form label input {
   display: block;
   padding-bottom: 10px;
 }
 
-.LogForm form label {
+.login_form form label {
   display: flex;
   flex-direction: column;
 }
 
-.LogForm form label input {
+.login_form form label input {
   display: block;
   padding-bottom: 10px;
 }

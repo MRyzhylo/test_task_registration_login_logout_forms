@@ -1,18 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useErrMessage } from "../hooks/errorMessage.hook";
 import { useHttp } from "../hooks/http.hook";
+import { AuthContext } from '../context/AuthContext';
+import { useCountryList } from "../hooks/country.hooks";
 
 function AuthPage () {
     const message = useErrMessage()
+    const list = useCountryList()
+    const auth = useContext(AuthContext);
     const {loading, request, error, clearError} =useHttp()
     const [form, setForm] = useState({
         email: '', login: '', real_name: '', password: '', birth_date: '', country: '', agreement:''
     });
 
-    useEffect( ()=> {
+    const countryListHandler = async () => {
+        try {
+            const countries = await request('http://localhost:5000/api/auth/country_list', 'GET')
+            await list(countries)
+        } catch (e) {}
+    }
+    
+    useEffect( 
+        ()=> {
+        countryListHandler()
         message(error)
         clearError()
-    }, [error, message, clearError])
+    }, [error, message, clearError]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value})
@@ -21,12 +34,13 @@ function AuthPage () {
     const registrationHandler = async () => {
         try {
             const data = await request('http://localhost:5000/api/auth/registration', 'POST', {...form})
-            console.log( data.message )
+            auth.logIn(data.token, data.userId, data.userName, data.userEmail, data.Message)
+            console.log(data.message)
         } catch (e) {}
     }
 
     return (
-        <div className="RegForm">
+        <div className="auth_form">
         <form action="" metod="POST">
             <h1> Registration </h1>
             <label>
@@ -41,9 +55,9 @@ function AuthPage () {
                 Birth date:
                 <input type="date" name="birth_date" onChange={changeHandler}/>
                 Country:
-                <select id="countrySelect" name="country" onChange={changeHandler}>
+                <select id="country_select" name="country" onChange={changeHandler} >
                     <option value=''>Please choose your country</option>
-                    <option>Poland</option>
+                    
                 </select>
                 I agree with terms and conditions
                 <input type="checkbox" name="agreement" onChange={changeHandler}/>

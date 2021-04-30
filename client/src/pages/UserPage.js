@@ -11,7 +11,7 @@ function UserPage () {
     }
 
     return (
-        <div>
+        <div className="user_page">
             <h1>User Page</h1>
             <p>Hi : {auth.userName} </p>
             <p>Your email: {auth.userEmail} </p>

@@ -31,7 +31,7 @@ function LoginForm() {
     
     
      return (  
-      <div className="LogForm">
+      <div className="login_form">
           <form action="" method="POST">
               <h1> Sign in </h1>
               <label>

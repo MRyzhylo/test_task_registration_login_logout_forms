@@ -38,8 +38,8 @@ async (req, res)=> {
         let hashedPassword = await bcrypt.hash(password, 8);
 
         db.query(
-            'SELECT email FROM userreg_data WHERE email = ?',
-            email,
+            'SELECT * FROM userreg_data WHERE email = ? OR login = ?',
+            [email, login],
             (err, results) => {
                 if (err) throw err
                 if (results.length === 0) {
@@ -54,16 +54,30 @@ async (req, res)=> {
                             country: country, 
                             agreement: agreement,
                         },
-                        (err, result) => {
+                        (err, results) => {
                             if (err){
                                 throw err
                             } else {
-                                return res.status(201).json({
-                                    message: 'User created'
-                                })
+                            const secretPhrase = config.get('jwt_secret');
+
+                            const token = jwt.sign(
+                                { Userid: results.insertId }, 
+                                secretPhrase, 
+                                { expiresIn: '1h' }
+                            ); 
+
+                            res.json({ 
+                                token, 
+                                userId: results.insertId,
+                                userEmail: email,  
+                                userName: real_name,
+                                message: 'User created'
+                                })                               
+                                
                             }
                         }
                     )
+                    
                 } else {
                     return res.status(400).json({
                         message: 'The same email or login is already exist'
@@ -77,6 +91,8 @@ async (req, res)=> {
         res.status(500).json({message:'Do not working? Try again!'})
         console.log(e)
     }
+
+
   
 });
 
@@ -125,5 +141,23 @@ async (req, res)=> {
         console.log(e)
     }
 });
+
+// /api/auth/country_list
+router.get('/country_list', async (req, res)=>{
+    try {
+        db.query('SELECT country_name FROM countries', async (err, result) => {
+            if (result.length === 0) {
+                res.status(400).json({
+                    message: 'Something going wrong, try again!'
+                })
+            } 
+            res.status(200).json({
+                countries: result
+            })
+        } )
+    } catch (e) {
+        console.log(e)
+    }
+})
 
 module.exports = router
